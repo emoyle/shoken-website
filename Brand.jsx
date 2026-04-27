@@ -194,7 +194,6 @@ function Footer() {
         }}>
           <span>© 2026 Shoken, Inc.</span>
           <span>New York, NY · inquiry@agentshoken.com</span>
-          <span>Named for Empress Shōken · 昭憲皇太后</span>
         </div>
       </div>
     </footer>
