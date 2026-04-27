@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For agencies — Shoken</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="Brand.jsx"></script>
+<script type="text/babel">
+const { Nav, Footer, Button, Arrow, Eyebrow, Section, PageHeader } = window;
+
+function QueueMock() {
+  const rows = [
+    ['BXW-0421', 'Org A · Bronx', 'C-21184', '$128,450.00', 'Screened', 'var(--gold)'],
+    ['HSS-0184', 'Org B · Lower East Side', 'C-19023', '$84,200.00', 'Screened', 'var(--gold)'],
+    ['GSS-0312', 'Org C · Citywide', 'C-44127', '$192,100.00', 'Flagged', 'var(--shu)'],
+    ['PHS-0097', 'Org D · Bronx & Manhattan', 'C-21184', '$208,050.00', 'Screened', 'var(--gold)'],
+    ['SHZ-0241', 'Org E · Citywide', 'C-22408', '$61,900.00', 'Screened', 'var(--gold)'],
+  ];
+  return (
+    <div style={{ border: '1px solid var(--rule)', borderRadius: 8, background: 'var(--paper)', boxShadow: 'var(--shadow-hero)', overflow: 'hidden' }}>
+      <div style={{ padding: '14px 20px', borderBottom: '1px solid var(--rule)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--kinari)' }}>
+        <div>
+          <div style={{ fontSize: 15, fontWeight: 500 }}>Review queue · Agency Finance</div>
+          <div style={{ fontSize: 12, color: 'var(--stone)', fontFamily: 'var(--font-mono)' }}>5 invoices · $674,700.00 · SLA median 1d 6h</div>
+        </div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--stone)' }}>Thu 22 Apr · 14:02 EDT</div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '110px 1fr 108px 130px 104px 108px', padding: '10px 20px', fontSize: 11, color: 'var(--stone)', textTransform: 'uppercase', letterSpacing: '0.08em', borderBottom: '1px solid var(--rule)', gap: 12, whiteSpace: 'nowrap' }}>
+        <span>Invoice</span><span>Nonprofit</span><span>Contract</span><span style={{ textAlign: 'right' }}>Amount</span><span style={{ textAlign: 'right' }}>Status</span><span style={{ textAlign: 'right' }}>Action</span>
+      </div>
+      {rows.map(([id, org, con, amt, stat, col], i) => (
+        <div key={id} style={{ display: 'grid', gridTemplateColumns: '110px 1fr 108px 130px 104px 108px', padding: '14px 20px', fontSize: 13, alignItems: 'center', borderBottom: i < rows.length - 1 ? '1px solid var(--rule)' : 'none', gap: 12, whiteSpace: 'nowrap' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--char)' }}>{id}</span>
+          <span>{org}</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ash)' }}>{con}</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, textAlign: 'right' }}>{amt}</span>
+          <span style={{ color: col, fontSize: 11, fontWeight: 500, textAlign: 'right', display: 'inline-flex', alignItems: 'center', gap: 6, justifySelf: 'end', whiteSpace: 'nowrap' }}>
+            <span style={{ width: 6, height: 6, borderRadius: 3, background: col, flexShrink: 0 }} />{stat}
+          </span>
+          <span style={{ textAlign: 'right' }}>
+            <span style={{ fontSize: 12, color: 'var(--shu)', fontWeight: 500 }}>Review →</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Operations() {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--rule)', border: '1px solid var(--rule)', borderRadius: 6 }}>
+      {[
+        ['Speed to payment', 'Cleaner invoices on arrival compress review cycles from weeks to days. Agencies meet statutory payment deadlines. Providers get paid faster.'],
+        ['Meet the mandate. Keep your team.', 'Contract portfolios keep expanding. Hiring can’t keep pace. Shoken absorbs the repetitive comparison work so every invoice gets the review it deserves, on time — and reviewers spend their hours on judgment calls, risk management, and provider relationships that require human expertise.'],
+        ['Every invoice, every status, right now.', 'Know which invoices are moving, which are stuck, and where bottlenecks form across the entire contract portfolio.'],
+      ].map(([t, d]) => (
+        <div key={t} style={{ background: 'var(--paper)', padding: '36px 32px' }}>
+          <div style={{ fontSize: 19, fontWeight: 500, letterSpacing: '-0.015em', marginBottom: 10 }}>{t}</div>
+          <div style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--ash)' }}>{d}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Strategy() {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--rule)', border: '1px solid var(--rule)', borderRadius: 6 }}>
+      {[
+        ['A complete record. A clearer picture.', 'Every revision is detailed and time-stamped — a complete record for audit readiness. Aggregate data across contracts surfaces portfolio risks, common errors, and opportunities for provider training and education.'],
+        ['Better nonprofit experience. Stronger partnerships.', 'Automated invoice assembly. Faster reviews, real-time feedback, transparent audit trails. Your nonprofit partners spend more time on mission, less time on paperwork — and fewer emails in your inbox.'],
+        ['Institutional knowledge, encoded.', 'Your agency’s rules, allowability standards, and review criteria live in Shoken — not in a binder, not in a single reviewer’s head. New staff ramp up faster, transitions don’t create gaps, and rule updates are implemented systemically.'],
+      ].map(([t, d]) => (
+        <div key={t} style={{ background: 'var(--paper)', padding: '36px 32px' }}>
+          <div style={{ fontSize: 19, fontWeight: 500, letterSpacing: '-0.015em', marginBottom: 10 }}>{t}</div>
+          <div style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--ash)' }}>{d}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Agencies() {
+  return (
+    <div>
+      <Nav current="agencies.html" />
+      <PageHeader
+        eyebrow="For agencies"
+        title="Shoken works before the review starts."
+        subtitle="When an invoice reaches your team, it has already been validated against the contract and agency rules. The agency’s job is to confirm, not to compare." />
+
+      <Section pad="48px 40px 96px">
+        <QueueMock />
+      </Section>
+
+      <section style={{ padding: '96px 40px', background: 'var(--kinari)', borderTop: '1px solid var(--rule)', borderBottom: '1px solid var(--rule)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ maxWidth: 720, marginBottom: 48 }}>
+            <Eyebrow>What changes · operations</Eyebrow>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 44, lineHeight: 1.08, letterSpacing: '-0.02em', marginTop: 16, fontWeight: 400 }}>
+              Less desk auditing.<br />More program oversight.
+            </div>
+          </div>
+          <Operations />
+        </div>
+      </section>
+
+      <Section pad="112px 40px">
+        <div style={{ maxWidth: 720, marginBottom: 48 }}>
+          <Eyebrow>What changes · strategy</Eyebrow>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 44, lineHeight: 1.08, letterSpacing: '-0.02em', marginTop: 16, fontWeight: 400 }}>
+            Higher throughput.<br />Deeper review.
+          </div>
+        </div>
+        <Strategy />
+      </Section>
+
+      <section style={{ padding: '96px 40px', background: 'var(--ink)', color: 'var(--kinari)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
+          <div>
+            <Eyebrow color="var(--shu-bright)">For public sector</Eyebrow>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 40, lineHeight: 1.1, letterSpacing: '-0.02em', marginTop: 16, fontWeight: 400 }}>
+              Built for the institutions that fund human services.
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {[
+              ['SOC 2 Type 2', 'Actively underway.'],
+              ['Data residency', 'State-hosted or in-region options available.'],
+              ['Role-based access', 'Program officer, finance, treasurer, auditor, read-only.'],
+              ['Full chain of custody', 'Every action logged with actor, timestamp, and contract ref.'],
+            ].map(([t, d]) => (
+              <div key={t} style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 32, paddingBottom: 16, borderBottom: '1px solid rgba(246,241,232,0.1)' }}>
+                <div style={{ fontSize: 14.5, fontWeight: 500 }}>{t}</div>
+                <div style={{ fontSize: 14, color: 'var(--mist)' }}>{d}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section style={{ padding: '120px 40px', textAlign: 'center' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 52, lineHeight: 1.05, letterSpacing: '-0.03em', fontWeight: 400, margin: '0 0 24px' }}>
+            Pilot on one contract portfolio.
+          </div>
+          <div style={{ fontSize: 16.5, color: 'var(--ash)', marginBottom: 32 }}>
+            Start with one agency division. Expand when you’re ready.
+          </div>
+          <Button size="lg">Talk to our team <Arrow /></Button>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Agencies />);
+</script>
+</body>
+</html>
