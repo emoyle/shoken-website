@@ -163,11 +163,11 @@ function LogoRow({ logos, color = T.stone }) {
 }
 
 const SAMPLE_LOGOS = [
-  { name: 'BronxWorks', weight: 700 },
-  { name: 'Henry Street', font: '"Source Serif 4", serif', weight: 500 },
-  { name: 'Good Shepherd', weight: 600 },
-  { name: 'Phipps Houses', weight: 600, tracking: '0.02em' },
-  { name: 'Safe Horizon', weight: 500, italic: true },
+  { name: 'Testing House', weight: 700 },
+  { name: 'Community Neighbors', font: '"Source Serif 4", serif', weight: 500 },
+  { name: 'Helping Hands', weight: 600 },
+  { name: 'Community Support', weight: 600, tracking: '0.02em' },
+  { name: 'Safety House', weight: 500, italic: true },
 ];
 
 // ═══════════════════════════════════════════════════════
@@ -290,7 +290,7 @@ function LandingC1() {
             <div style={{ width: 36, height: 36, borderRadius: 18, background: T.shu }} />
             <div>
               <div style={{ fontSize: 14, fontWeight: 500 }}>Daniela Ruiz</div>
-              <div style={{ fontSize: 13, color: T.mist }}>CFO · Phipps Neighborhoods</div>
+              <div style={{ fontSize: 13, color: T.mist }}>CFO · Community Neighborhoods</div>
             </div>
           </div>
         </div>
@@ -400,10 +400,10 @@ function HeroProductFrame() {
               <span>Invoice</span><span>Organization</span><span style={{ textAlign: 'right' }}>Amount</span><span>Submitted</span><span style={{ textAlign: 'right' }}>Status</span>
             </div>
             {[
-              ['INV-2026-0421', 'BronxWorks', '$128,450.00', '22 Apr', 'Validated', T.gold],
-              ['INV-2026-0420', 'Henry Street Settlement', '$84,200.00', '22 Apr', 'Awaiting', T.stone],
-              ['INV-2026-0419', 'Good Shepherd Services', '$192,100.00', '21 Apr', 'Returned', T.shu],
-              ['INV-2026-0418', 'Phipps Houses', '$208,050.00', '21 Apr', 'Validated', T.gold],
+              ['INV-2026-0421', 'Testing House', '$128,450.00', '22 Apr', 'Validated', T.gold],
+              ['INV-2026-0420', 'Community Neighborhood', '$84,200.00', '22 Apr', 'Awaiting', T.stone],
+              ['INV-2026-0419', 'Safe Neighbors', '$192,100.00', '21 Apr', 'Returned', T.shu],
+              ['INV-2026-0418', 'Sharing House', '$208,050.00', '21 Apr', 'Validated', T.gold],
             ].map(([id, org, amt, d, stat, col], i, arr) => (
               <div key={id} style={{
                 display: 'grid', gridTemplateColumns: '90px 1fr 120px 110px 90px',
@@ -596,7 +596,7 @@ function LandingC4({ Mark }) {
       <div style={{ padding: '112px 48px', maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ maxWidth: 860 }}>
           <div style={{ fontSize: 14, color: T.shu, fontWeight: 500, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 20 }}>
-            ■ CFO · Phipps Neighborhoods
+            ■ CFO · Community Neighbors
           </div>
           <div style={{ fontFamily: '"Source Serif 4", Georgia, serif', fontSize: 42, lineHeight: 1.2, fontWeight: 400, letterSpacing: '-0.015em' }}>
             "We were closing the month twelve days late. Shoken closes it for us on the second. Our program officers got their weekends back."
@@ -605,7 +605,7 @@ function LandingC4({ Mark }) {
             <div style={{ width: 44, height: 44, borderRadius: 22, background: T.shu }} />
             <div>
               <div style={{ fontSize: 14, fontWeight: 500 }}>Daniela Ruiz</div>
-              <div style={{ fontSize: 13, color: T.ash }}>CFO · Phipps Neighborhoods</div>
+              <div style={{ fontSize: 13, color: T.ash }}>CFO · Community Neighbors</div>
             </div>
           </div>
         </div>
