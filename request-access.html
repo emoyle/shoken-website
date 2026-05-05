@@ -36,6 +36,13 @@
   .radio-pill.active {
     background: var(--ink); color: var(--paper); border-color: var(--ink);
   }
+  .radio-pill:focus-within {
+    outline: 2px solid var(--shu); outline-offset: 2px;
+  }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
 </style>
 </head>
 <body>
@@ -44,14 +51,41 @@
 <script type="text/babel">
 const { Nav, Footer, Button, Arrow, Eyebrow, Section } = window;
 
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqvoowd';
+
 function RequestAccess() {
   const [role, setRole] = React.useState('nonprofit');
+  const [submitting, setSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (submitting) return;
+    const form = e.currentTarget;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const data = await res.json().catch(() => null);
+        const msg = data && Array.isArray(data.errors) && data.errors.length
+          ? data.errors.map((x) => x.message).join(', ')
+          : 'Something went wrong. Please try again, or email inquiry@agentshoken.com.';
+        setError(msg);
+      }
+    } catch (err) {
+      setError('Network error. Please try again, or email inquiry@agentshoken.com.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -117,65 +151,88 @@ function RequestAccess() {
             </div>
 
             {/* Form */}
-            <form onSubmit={onSubmit} style={{ background: 'var(--paper)', border: '1px solid var(--rule)', borderRadius: 8, padding: '40px 40px 36px', boxShadow: 'var(--shadow-raise)' }}>
+            <form onSubmit={onSubmit} action={FORMSPREE_ENDPOINT} method="POST" noValidate style={{ background: 'var(--paper)', border: '1px solid var(--rule)', borderRadius: 8, padding: '40px 40px 36px', boxShadow: 'var(--shadow-raise)' }}>
+              <input type="hidden" name="_subject" value="Request access — agentshoken.com" />
+              {/* Honeypot — hidden from users, bots fill it and get rejected */}
+              <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off" className="visually-hidden" aria-hidden="true" />
+
               <div className="field" style={{ marginBottom: 28 }}>
-                <label>I represent</label>
-                <div className="radio-row">
+                <label id="role-label">I represent</label>
+                <div className="radio-row" role="radiogroup" aria-labelledby="role-label">
                   {[
                     ['nonprofit', 'A nonprofit'],
                     ['agency', 'A government agency'],
                     ['other', 'Other'],
                   ].map(([v, l]) => (
-                    <div key={v} className={`radio-pill ${role === v ? 'active' : ''}`} onClick={() => setRole(v)}>{l}</div>
+                    <label key={v} className={`radio-pill ${role === v ? 'active' : ''}`}>
+                      <input
+                        type="radio"
+                        name="role"
+                        value={v}
+                        checked={role === v}
+                        onChange={() => setRole(v)}
+                        className="visually-hidden"
+                      />
+                      {l}
+                    </label>
                   ))}
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
                 <div className="field">
-                  <label>First name</label>
-                  <input required placeholder="Daniel" />
+                  <label htmlFor="firstName">First name</label>
+                  <input id="firstName" name="firstName" required placeholder="Daniel" />
                 </div>
                 <div className="field">
-                  <label>Last name</label>
-                  <input required placeholder="Ross" />
+                  <label htmlFor="lastName">Last name</label>
+                  <input id="lastName" name="lastName" required placeholder="Ross" />
                 </div>
               </div>
 
               <div className="field" style={{ marginBottom: 20 }}>
-                <label>Work email</label>
-                <input required type="email" placeholder="email@address.org" />
+                <label htmlFor="email">Work email</label>
+                <input id="email" name="email" required type="email" placeholder="email@address.org" />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 32 }}>
                 <div className="field">
-                  <label>{role === 'agency' ? 'Agency' : 'Organization'}</label>
-                  <input required placeholder={role === 'agency' ? 'Agency for Social Services' : 'Community Neighborhoods'} />
+                  <label htmlFor="organization">{role === 'agency' ? 'Agency' : 'Organization'}</label>
+                  <input id="organization" name="organization" required placeholder={role === 'agency' ? 'Agency for Social Services' : 'Community Neighborhoods'} />
                 </div>
                 <div className="field">
-                  <label>Title</label>
-                  <input required placeholder="Chief Financial Officer" />
+                  <label htmlFor="title">Title</label>
+                  <input id="title" name="title" required placeholder="Chief Financial Officer" />
                 </div>
               </div>
 
               <div className="field" style={{ marginBottom: 32 }}>
-                <label>Anything we should know</label>
-                <textarea placeholder={role === 'agency'
+                <label htmlFor="message">Anything we should know</label>
+                <textarea id="message" name="message" placeholder={role === 'agency'
                   ? 'Which divisions, how many nonprofit providers, systems in use…'
                   : 'Which agencies, which systems of record, current pain points…'} />
               </div>
+
+              {error && (
+                <div role="alert" style={{
+                  marginBottom: 20, padding: '12px 14px', border: '1px solid var(--shu)', borderRadius: 4,
+                  background: 'rgba(194,56,47,0.06)', color: 'var(--shu-ink)', fontSize: 13.5, lineHeight: 1.5,
+                }}>{error}</div>
+              )}
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 24, borderTop: '1px solid var(--rule)' }}>
                 <div style={{ fontSize: 12, color: 'var(--stone)', fontFamily: 'var(--font-mono)' }}>
                   We reply within 2 business days.
                 </div>
-                <button type="submit" style={{
+                <button type="submit" disabled={submitting} aria-busy={submitting} style={{
                   background: 'var(--ink)', color: 'var(--paper)', border: 'none',
                   padding: '12px 22px', fontSize: 14, fontWeight: 500,
-                  fontFamily: 'var(--font-sans)', borderRadius: 4, cursor: 'pointer',
+                  fontFamily: 'var(--font-sans)', borderRadius: 4,
+                  cursor: submitting ? 'not-allowed' : 'pointer',
+                  opacity: submitting ? 0.6 : 1,
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                 }}>
-                  Request access <Arrow />
+                  {submitting ? 'Sending…' : <>Request access <Arrow /></>}
                 </button>
               </div>
             </form>
